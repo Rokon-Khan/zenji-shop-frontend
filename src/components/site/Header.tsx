@@ -9,16 +9,16 @@ import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 
 const NAV = [
-  { label: "Drop", to: "/drop" },
-  { label: "Collection", to: "/collection" },
-  { label: "Lookbook", to: "/lookbook" },
-  { label: "Our Story", to: "/our-story" },
+  { label: "DROP", to: "/drop" },
+  { label: "COLLECTION", to: "/collection" },
+  { label: "LOOKBOOK", to: "/lookbook" },
+  { label: "OUR STORY", to: "/our-story" },
 ] as const;
 
 const MORE = [
   { label: "FAQ", to: "/faq" },
-  { label: "Review", to: "/review" },
-  { label: "Login", to: "/login" },
+  { label: "REVIEW", to: "/review" },
+  { label: "LOGIN", to: "/login" },
 ] as const;
 
 export function Header() {
@@ -43,15 +43,18 @@ export function Header() {
             />
           </Link>
 
-          <nav className="hidden items-center justify-center gap-7 lg:flex">
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center justify-center gap-8 lg:flex">
             {NAV.map((n) => {
               const active = pathname === n.to;
               return (
                 <Link
                   key={n.to}
                   href={n.to}
-                  className={`label-xs font-bold transition-colors ${
-                    active ? "text-primary" : "text-foreground hover:text-primary"
+                  className={`nav-link-glow label-xs font-bold transition-colors ${
+                    active
+                      ? "text-primary"
+                      : "text-foreground hover:text-white"
                   }`}
                 >
                   {n.label}
@@ -63,16 +66,16 @@ export function Header() {
               onMouseEnter={() => setMore(true)}
               onMouseLeave={() => setMore(false)}
             >
-              <button className="label-xs flex items-center gap-1 font-bold text-foreground hover:text-primary">
-                More <ChevronDown className="h-3 w-3" />
+              <button className="nav-link-glow label-xs flex items-center gap-1 font-bold text-foreground hover:text-white cursor-pointer py-1">
+                MORE <ChevronDown className="h-3 w-3" />
               </button>
               {more && (
-                <div className="absolute left-1/2 w-40 -translate-x-1/2 border border-border bg-card p-2 shadow-lg">
+                <div className="absolute left-1/2 w-40 -translate-x-1/2 border border-border bg-card p-2 shadow-xl z-50">
                   {MORE.map((m) => (
                     <Link
                       key={m.to}
                       href={m.to}
-                      className="label-xs block px-3 py-2 hover:bg-accent hover:text-primary"
+                      className="nav-link-glow label-xs block w-full text-left px-3 py-2.5 hover:bg-accent hover:text-white"
                     >
                       {m.label}
                     </Link>
@@ -95,7 +98,7 @@ export function Header() {
             <Link
               href="/wishlist"
               aria-label="Wishlist"
-              className="relative text-foreground transition-colors hover:text-primary cursor-pointer p-1"
+              className="nav-link-glow relative text-foreground transition-colors hover:text-primary cursor-pointer p-1.5"
             >
               <Heart
                 className={`h-5 w-5 ${
@@ -105,7 +108,7 @@ export function Header() {
                 }`}
               />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
                   {wishlistCount}
                 </span>
               )}
@@ -115,11 +118,11 @@ export function Header() {
             <button
               onClick={() => setOpen(true)}
               aria-label="Open cart"
-              className="relative text-foreground transition-colors hover:text-primary cursor-pointer p-1"
+              className="nav-link-glow relative text-foreground transition-colors hover:text-primary cursor-pointer p-1.5"
             >
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
                   {cartCount}
                 </span>
               )}
@@ -129,7 +132,7 @@ export function Header() {
             <Link
               href="/login"
               aria-label="Account"
-              className="hover:text-primary transition-colors p-1"
+              className="nav-link-glow hover:text-primary transition-colors p-1.5"
             >
               <User className="h-5 w-5" />
             </Link>
@@ -138,27 +141,30 @@ export function Header() {
             <button
               onClick={() => setMobile((v) => !v)}
               aria-label="Toggle menu"
-              className="lg:hidden cursor-pointer p-1"
+              className="lg:hidden cursor-pointer p-1.5"
             >
               {mobile ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
+        {/* Mobile Navigation Dropdown */}
         {mobile && (
-          <nav className="border-t border-border bg-ink px-4 py-4 lg:hidden">
-            {[...NAV, ...MORE, { label: `Wishlist (${wishlistCount})`, to: "/wishlist" }].map(
-              (n) => (
-                <Link
-                  key={n.to}
-                  href={n.to}
-                  onClick={() => setMobile(false)}
-                  className="display block border-b border-border py-3 text-lg tracking-wide hover:text-primary"
-                >
-                  {n.label}
-                </Link>
-              )
-            )}
+          <nav className="border-t border-border bg-ink px-4 py-4 lg:hidden space-y-1">
+            {[
+              ...NAV,
+              ...MORE,
+              { label: `WISHLIST (${wishlistCount})`, to: "/wishlist" },
+            ].map((n) => (
+              <Link
+                key={n.to}
+                href={n.to}
+                onClick={() => setMobile(false)}
+                className="nav-link-glow display block w-full text-left border-b border-border/50 py-3 text-lg tracking-wider hover:text-white"
+              >
+                {n.label}
+              </Link>
+            ))}
           </nav>
         )}
       </div>

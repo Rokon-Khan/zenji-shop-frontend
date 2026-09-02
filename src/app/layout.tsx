@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CartDrawer } from "@/components/site/CartDrawer";
+import { FirstVisitPopup } from "@/components/site/FirstVisitPopup";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
 import { Toaster } from "@/components/ui/sonner";
@@ -66,6 +67,7 @@ export default function RootLayout({
               <Footer />
             </div>
             <CartDrawer />
+            <FirstVisitPopup />
             <Toaster position="bottom-right" />
           </CartProvider>
         </WishlistProvider>
