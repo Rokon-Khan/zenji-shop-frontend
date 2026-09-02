@@ -1,69 +1,165 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { products } from "@/lib/products";
+import { ProductCard } from "@/components/site/ProductCard";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "ZENJI — Wear Your Story | Anime Streetwear Australia",
+  description:
+    "Limited-edition anime graphic tees from ZENJI. 240gsm heavyweight cotton, oversized fit, free AU shipping over A$150.",
+  openGraph: {
+    title: "ZENJI — Wear Your Story",
+    description: "Anime-inspired streetwear for gamers and otaku. Every drop limited.",
+    images: ["/hero.jpg"],
+  },
+};
+
+export default function HomePage() {
+  const sale = products.filter((p) => p.compareAt).slice(0, 4);
+  const latest = products.slice(0, 5);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* HERO */}
+      <section className="relative">
+        <img
+          src="/hero.jpg"
+          alt="ZENJI model in a graffiti alley wearing an oversized anime graphic tee"
+          width={1920}
+          height={1080}
+          className="h-[70vh] min-h-[420px] w-full object-cover"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+        <div className="absolute bottom-10 left-0 w-full px-4 sm:px-6">
+          <div className="mx-auto max-w-[1600px]">
+            <h1 className="display text-5xl leading-[0.85] sm:text-7xl lg:text-8xl">
+              Wear Your
+              <br />
+              Story
+            </h1>
+            <Link
+              href="/drop"
+              className="label-xs mt-6 inline-block bg-primary px-6 py-3 font-bold text-primary-foreground hover:opacity-90 transition-opacity"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Shop the Drop →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ETHOS SPLIT */}
+      <section className="grid md:grid-cols-2">
+        <img
+          src="/lookbook-3.jpg"
+          alt="Group of friends wearing ZENJI tees in a warehouse"
+          loading="lazy"
+          width={1000}
+          height={1250}
+          className="h-full max-h-[520px] w-full object-cover"
+        />
+        <div className="flex flex-col justify-center gap-5 bg-ink p-8 sm:p-14">
+          <h2 className="display text-3xl leading-[0.9] sm:text-5xl">
+            Born from the
+            <br />
+            warrior spirit.
+          </h2>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            ZENJI is an Australian anime streetwear label. Inspired by samurai discipline, anime art
+            and modern street culture, we make premium streetwear for those who choose their own
+            path.
+          </p>
+          <blockquote className="rule-left text-sm leading-relaxed text-primary">
+            ZENJI is more than a name on a shirt. It represents the warrior within, the part of us
+            that keeps moving forward.
+          </blockquote>
+          <Link
+            href="/our-story"
+            className="label-xs w-fit border-b border-primary pb-1 font-bold hover:text-primary transition-colors"
+          >
+            Read our story →
+          </Link>
+        </div>
+      </section>
+
+      {/* SALE */}
+      <section className="bg-paper py-16 text-paper-foreground">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+            <div className="min-w-0">
+              <p className="label-xs text-primary">{"On_Sale // Limited_Stock"}</p>
+              <h2 className="display mt-2 text-4xl sm:text-6xl">Sale</h2>
+            </div>
+            <Link
+              href="/collection"
+              className="label-xs shrink-0 border border-paper-foreground/30 px-4 py-2 font-bold hover:bg-paper-foreground hover:text-paper transition-colors"
             >
-              Learning
-            </a>{" "}
-            center.
+              View all
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {sale.map((p) => (
+              <Link
+                key={p.slug}
+                href={`/drop/${p.slug}`}
+                className="group relative block overflow-hidden border border-paper-foreground/10"
+              >
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  loading="lazy"
+                  width={900}
+                  height={1100}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-ink/85 p-3">
+                  <p className="display text-sm text-ink-foreground">{p.name}</p>
+                  <p className="label-xs text-primary">Save on this arc</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LATEST DROPS */}
+      <section className="py-16">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
+          <p className="label-xs text-primary">{"New_Arrivals // Fresh_Ink"}</p>
+          <h2 className="display mt-2 text-4xl sm:text-6xl">Latest_Drops</h2>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {latest.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ETHOS BANNER */}
+      <section className="relative">
+        <img
+          src="/lookbook-1.jpg"
+          alt="Models in ZENJI tees on a neon Tokyo street"
+          loading="lazy"
+          width={1000}
+          height={1250}
+          className="h-[420px] w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-ink/70" />
+        <div className="absolute inset-0 mx-auto flex max-w-[1600px] flex-col justify-center px-4 sm:px-6">
+          <h2 className="display text-4xl leading-[0.85] sm:text-6xl">
+            The
+            <br />
+            <span className="text-primary">ZENJI</span>
+            <br />
+            Ethos
+          </h2>
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
+            Limited runs. No restocks. Every piece is a chapter — once the arc closes, it stays
+            closed.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }

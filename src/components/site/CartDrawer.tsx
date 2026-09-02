@@ -1,4 +1,6 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/lib/cart";
@@ -20,7 +22,7 @@ export function CartDrawer() {
         <div className="flex-1 space-y-4 overflow-y-auto px-4">
           {lines.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              Nothing here yet. Go claim a piece before it's gone.
+              Nothing here yet. Go claim a piece before it&apos;s gone.
             </p>
           )}
           {lines.map((l) => (
@@ -41,7 +43,7 @@ export function CartDrawer() {
               <button
                 onClick={() => remove(l.slug, l.size)}
                 aria-label={`Remove ${l.name}`}
-                className="h-fit shrink-0 text-muted-foreground transition-colors hover:text-primary"
+                className="h-fit shrink-0 text-muted-foreground transition-colors hover:text-primary cursor-pointer"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -56,12 +58,12 @@ export function CartDrawer() {
           </div>
           <button
             disabled={lines.length === 0}
-            className="display w-full bg-primary py-3 text-sm tracking-widest text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+            className="display w-full bg-primary py-3 text-sm tracking-widest text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
           >
             Checkout →
           </button>
           <Link
-            to="/collection"
+            href="/collection"
             onClick={() => setOpen(false)}
             className="label-xs block text-center text-muted-foreground underline underline-offset-4 hover:text-foreground"
           >

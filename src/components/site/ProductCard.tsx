@@ -1,4 +1,6 @@
-import { Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { money, type Product } from "@/lib/products";
@@ -11,8 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group border border-border bg-card">
       <Link
-        to="/drop/$slug"
-        params={{ slug: product.slug }}
+        href={`/drop/${product.slug}`}
         className="relative block overflow-hidden"
       >
         {onSale && (
@@ -34,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
 
       <div className="space-y-2 p-3">
-        <Link to="/drop/$slug" params={{ slug: product.slug }} className="display block text-sm">
+        <Link href={`/drop/${product.slug}`} className="display block text-sm hover:text-primary transition-colors">
           {product.name}
         </Link>
         <div className="flex items-baseline gap-2">
@@ -52,7 +53,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="grid grid-cols-2 gap-2 pt-1">
           <button
             onClick={() => toast.success(`${product.name} saved to wishlist`)}
-            className="label-xs flex items-center justify-center gap-1 border border-border py-2 hover:border-primary hover:text-primary"
+            className="label-xs flex items-center justify-center gap-1 border border-border py-2 hover:border-primary hover:text-primary transition-colors cursor-pointer"
           >
             <Heart className="h-3 w-3" /> Wishlist
           </button>
@@ -69,7 +70,7 @@ export function ProductCard({ product }: { product: Product }) {
               });
               setOpen(true);
             }}
-            className="label-xs bg-paper py-2 font-bold text-paper-foreground hover:bg-primary hover:text-primary-foreground"
+            className="label-xs bg-paper py-2 font-bold text-paper-foreground hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
           >
             Add to cart →
           </button>
