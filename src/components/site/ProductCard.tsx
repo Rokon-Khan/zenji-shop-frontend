@@ -5,10 +5,13 @@ import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { money, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 export function ProductCard({ product }: { product: Product }) {
   const { add, setOpen } = useCart();
+  const { toggle, has } = useWishlist();
   const onSale = Boolean(product.compareAt);
+  const isSaved = has(product.slug);
 
   return (
     <article className="group border border-border bg-card">
@@ -35,7 +38,10 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
 
       <div className="space-y-2 p-3">
-        <Link href={`/drop/${product.slug}`} className="display block text-sm hover:text-primary transition-colors">
+        <Link
+          href={`/drop/${product.slug}`}
+          className="display block text-sm hover:text-primary transition-colors"
+        >
           {product.name}
         </Link>
         <div className="flex items-baseline gap-2">
@@ -45,26 +51,44 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
           )}
           <span
-            className={`display text-lg ${onSale ? "text-primary" : "text-foreground"}`}
+            className={`display text-lg ${
+              onSale ? "text-primary" : "text-foreground"
+            }`}
           >
             {money(product.price)}
           </span>
         </div>
         <div className="grid grid-cols-2 gap-2 pt-1">
           <button
-            onClick={() => toast.success(`${product.name} saved to wishlist`)}
-            className="label-xs flex items-center justify-center gap-1 border border-border py-2 hover:border-primary hover:text-primary transition-colors cursor-pointer"
+            onClick={() => {
+              toggle(product.slug);
+              if (isSaved) {
+                toast.info(`${product.name} removed from wishlist`);
+              } else {
+                toast.success(`${product.name} saved to wishlist`);
+              }
+            }}
+            className={`label-xs flex items-center justify-center gap-1 border py-2 transition-colors cursor-pointer ${
+              isSaved
+                ? "border-primary text-primary bg-primary/10"
+                : "border-border hover:border-primary hover:text-primary"
+            }`}
           >
-            <Heart className="h-3 w-3" /> Wishlist
+            <Heart className={`h-3 w-3 ${isSaved ? "fill-primary" : ""}`} />{" "}
+            {isSaved ? "Saved" : "Wishlist"}
           </button>
           <button
             onClick={() => {
-              const size = product.sizes.find((s) => !product.soldOutSizes.includes(s)) ?? "M";
+              const size =
+                product.sizes.find(
+                  (s) => !product.soldOutSizes.includes(s)
+                ) ?? "M";
               add({
                 slug: product.slug,
                 name: product.name,
                 size,
                 price: product.price,
+                compareAt: product.compareAt,
                 image: product.image,
                 qty: 1,
               });

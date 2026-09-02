@@ -32,7 +32,7 @@ export function CartDrawer() {
       >
         {/* Header */}
         <div
-          className="flex items-center justify-between px-5 py-4 border-b"
+          className="flex items-center justify-between px-5 py-4 border-b pr-12"
           style={{ borderColor: "#1f1f1f" }}
         >
           <div className="flex items-center gap-3">
@@ -51,13 +51,6 @@ export function CartDrawer() {
               </span>
             )}
           </div>
-          <button
-            onClick={() => setOpen(false)}
-            aria-label="Close cart"
-            className="p-1 transition-opacity hover:opacity-60 cursor-pointer"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
         </div>
 
         {/* Items */}

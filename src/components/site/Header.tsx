@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, ShoppingCart, User, X } from "lucide-react";
+import { ChevronDown, Heart, Menu, ShoppingCart, User, X } from "lucide-react";
 import { Marquee } from "./Marquee";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 const NAV = [
   { label: "Drop", to: "/drop" },
@@ -23,7 +24,8 @@ const MORE = [
 export function Header() {
   const [mobile, setMobile] = useState(false);
   const [more, setMore] = useState(false);
-  const { count, setOpen } = useCart();
+  const { count: cartCount, setOpen } = useCart();
+  const { count: wishlistCount } = useWishlist();
   const pathname = usePathname();
 
   return (
@@ -80,33 +82,63 @@ export function Header() {
             </div>
           </nav>
 
-          <div className="flex items-center justify-end gap-3">
+          <div className="flex items-center justify-end gap-3 sm:gap-4">
             <div className="hidden items-center border border-border md:flex">
               <input
                 placeholder="SEARCH..."
                 aria-label="Search products"
-                className="label-xs w-40 bg-transparent px-3 py-2 outline-none placeholder:text-muted-foreground focus:w-56"
+                className="label-xs w-36 bg-transparent px-3 py-2 outline-none placeholder:text-muted-foreground focus:w-48 transition-all"
               />
             </div>
+
+            {/* Wishlist Heart Icon */}
+            <Link
+              href="/wishlist"
+              aria-label="Wishlist"
+              className="relative text-foreground transition-colors hover:text-primary cursor-pointer p-1"
+            >
+              <Heart
+                className={`h-5 w-5 ${
+                  wishlistCount > 0
+                    ? "fill-primary text-primary"
+                    : "text-foreground hover:text-primary"
+                }`}
+              />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
+            {/* Cart Icon */}
             <button
               onClick={() => setOpen(true)}
               aria-label="Open cart"
-              className="relative text-foreground transition-colors hover:text-primary cursor-pointer"
+              className="relative text-foreground transition-colors hover:text-primary cursor-pointer p-1"
             >
               <ShoppingCart className="h-5 w-5" />
-              {count > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-4 min-w-4 items-center justify-center bg-primary px-1 text-[10px] font-bold text-primary-foreground">
-                  {count}
+              {cartCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                  {cartCount}
                 </span>
               )}
             </button>
-            <Link href="/login" aria-label="Account" className="hover:text-primary">
+
+            {/* Account Icon */}
+            <Link
+              href="/login"
+              aria-label="Account"
+              className="hover:text-primary transition-colors p-1"
+            >
               <User className="h-5 w-5" />
             </Link>
+
+            {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobile((v) => !v)}
               aria-label="Toggle menu"
-              className="lg:hidden cursor-pointer"
+              className="lg:hidden cursor-pointer p-1"
             >
               {mobile ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -115,16 +147,18 @@ export function Header() {
 
         {mobile && (
           <nav className="border-t border-border bg-ink px-4 py-4 lg:hidden">
-            {[...NAV, ...MORE].map((n) => (
-              <Link
-                key={n.to}
-                href={n.to}
-                onClick={() => setMobile(false)}
-                className="display block border-b border-border py-3 text-lg tracking-wide hover:text-primary"
-              >
-                {n.label}
-              </Link>
-            ))}
+            {[...NAV, ...MORE, { label: `Wishlist (${wishlistCount})`, to: "/wishlist" }].map(
+              (n) => (
+                <Link
+                  key={n.to}
+                  href={n.to}
+                  onClick={() => setMobile(false)}
+                  className="display block border-b border-border py-3 text-lg tracking-wide hover:text-primary"
+                >
+                  {n.label}
+                </Link>
+              )
+            )}
           </nav>
         )}
       </div>

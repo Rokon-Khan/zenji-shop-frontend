@@ -6,6 +6,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { CartDrawer } from "@/components/site/CartDrawer";
 import { CartProvider } from "@/lib/cart";
+import { WishlistProvider } from "@/lib/wishlist";
 import { Toaster } from "@/components/ui/sonner";
 
 const oswald = Oswald({
@@ -57,15 +58,17 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-mono">
-        <CartProvider>
-          <div className="flex min-h-screen flex-col bg-background">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <CartDrawer />
-          <Toaster position="bottom-right" />
-        </CartProvider>
+        <WishlistProvider>
+          <CartProvider>
+            <div className="flex min-h-screen flex-col bg-background">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <CartDrawer />
+            <Toaster position="bottom-right" />
+          </CartProvider>
+        </WishlistProvider>
       </body>
     </html>
   );
