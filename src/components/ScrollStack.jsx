@@ -67,18 +67,20 @@ const ScrollStack = ({
     }
   }, [useWindowScroll]);
 
-  const getElementOffset = useCallback(
-    (element) => {
+  const getElementStaticOffset = useCallback(
+    (element, index) => {
       if (!element) return 0;
       if (useWindowScroll) {
         const rect = element.getBoundingClientRect();
-        return (
-          rect.top +
-          (window.scrollY ||
-            window.pageYOffset ||
-            document.documentElement.scrollTop ||
-            0)
-        );
+        const currentScroll =
+          window.scrollY ||
+          window.pageYOffset ||
+          document.documentElement.scrollTop ||
+          0;
+        const currentTranslateY =
+          lastTransformsRef.current.get(index)?.translateY || 0;
+        // Subtract currentTranslateY so offset is unpolluted by transform
+        return rect.top + currentScroll - currentTranslateY;
       } else {
         return element.offsetTop;
       }
@@ -102,12 +104,16 @@ const ScrollStack = ({
       ? document.querySelector(".scroll-stack-end")
       : scrollerRef.current?.querySelector(".scroll-stack-end");
 
-    const endElementTop = endElement ? getElementOffset(endElement) : 0;
+    const endElementTop = endElement
+      ? useWindowScroll
+        ? endElement.getBoundingClientRect().top + scrollTop
+        : endElement.offsetTop
+      : 0;
 
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
 
-      const cardTop = getElementOffset(card);
+      const cardTop = getElementStaticOffset(card, i);
       const triggerStart = cardTop - stackPositionPx - itemStackDistance * i;
       const triggerEnd = cardTop - scaleEndPositionPx;
       const pinStart = cardTop - stackPositionPx - itemStackDistance * i;
@@ -126,7 +132,7 @@ const ScrollStack = ({
       if (blurAmount) {
         let topCardIndex = 0;
         for (let j = 0; j < cardsRef.current.length; j++) {
-          const jCardTop = getElementOffset(cardsRef.current[j]);
+          const jCardTop = getElementStaticOffset(cardsRef.current[j], j);
           const jTriggerStart =
             jCardTop - stackPositionPx - itemStackDistance * j;
           if (scrollTop >= jTriggerStart) {
@@ -160,10 +166,10 @@ const ScrollStack = ({
       const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
         !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.05 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.0005 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.05 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.05;
 
       if (hasChanged) {
         const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
@@ -201,7 +207,7 @@ const ScrollStack = ({
     calculateProgress,
     parsePercentage,
     getScrollData,
-    getElementOffset,
+    getElementStaticOffset,
   ]);
 
   const handleScroll = useCallback(() => {
@@ -213,10 +219,10 @@ const ScrollStack = ({
 
     if (useWindowScroll) {
       const lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        touchMultiplier: 2,
+        touchMultiplier: 1.5,
         infinite: false,
         wheelMultiplier: 1,
         lerp: 0.1,
@@ -241,7 +247,7 @@ const ScrollStack = ({
       const lenis = new Lenis({
         wrapper: scroller,
         content: scroller.querySelector(".scroll-stack-inner"),
-        duration: 1.2,
+        duration: 1.0,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         touchMultiplier: 2,
@@ -297,7 +303,11 @@ const ScrollStack = ({
 
     setupLenis();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const onScroll = () => {
+      handleScroll();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
 
     updateCardTransforms();
@@ -309,7 +319,7 @@ const ScrollStack = ({
       if (lenisRef.current) {
         lenisRef.current.destroy();
       }
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", handleScroll);
       stackCompletedRef.current = false;
       cardsRef.current = [];
