@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { products } from "@/lib/products";
 import { ProductCard } from "@/components/site/ProductCard";
+import HomeScrollStack from "@/components/HomeScrollStack";
 
 export const metadata: Metadata = {
   title: "ZENJI — Wear Your Story | Anime Streetwear Australia",
@@ -15,34 +16,53 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const sale = products.filter((p) => p.compareAt).slice(0, 4);
   const latest = products.slice(0, 5);
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative">
-        <img
-          src="/hero.jpg"
-          alt="ZENJI model in a graffiti alley wearing an oversized anime graphic tee"
-          width={1920}
-          height={1080}
-          className="h-[70vh] min-h-[420px] w-full object-cover"
+      {/* HERO — full‑screen video */}
+      <section className="relative overflow-hidden">
+        <video
+          src="/hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-[90vh] min-h-[520px] w-full object-cover"
+          aria-hidden="true"
         />
+        {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
+        {/* Hero copy */}
         <div className="absolute bottom-10 left-0 w-full px-4 sm:px-6">
           <div className="mx-auto max-w-[1600px]">
-            <h1 className="display text-5xl leading-[0.85] sm:text-7xl lg:text-8xl">
+            <h1 className="display text-6xl leading-[0.85] sm:text-8xl lg:text-[10rem]">
               Wear Your
               <br />
               Story
             </h1>
             <Link
               href="/drop"
-              className="label-xs mt-6 inline-block bg-primary px-6 py-3 font-bold text-primary-foreground hover:opacity-90 transition-opacity"
+              className="label-xs mt-8 inline-block bg-primary px-8 py-4 font-bold text-primary-foreground hover:opacity-90 transition-opacity tracking-widest"
             >
-              Shop the Drop →
+              SHOP THE DROP →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* DROP SHOWCASE — Interactive ScrollStack */}
+      <HomeScrollStack />
+
+      {/* LATEST DROPS */}
+      <section className="py-16">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
+          <p className="label-xs text-primary">{"New_Arrivals // Fresh_Ink"}</p>
+          <h2 className="display mt-2 text-4xl sm:text-6xl">Latest_Drops</h2>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {latest.map((p) => (
+              <ProductCard key={p.slug} product={p} />
+            ))}
           </div>
         </div>
       </section>
@@ -78,60 +98,6 @@ export default function HomePage() {
           >
             Read our story →
           </Link>
-        </div>
-      </section>
-
-      {/* SALE */}
-      <section className="bg-paper py-16 text-paper-foreground">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
-            <div className="min-w-0">
-              <p className="label-xs text-primary">{"On_Sale // Limited_Stock"}</p>
-              <h2 className="display mt-2 text-4xl sm:text-6xl">Sale</h2>
-            </div>
-            <Link
-              href="/collection"
-              className="label-xs shrink-0 border border-paper-foreground/30 px-4 py-2 font-bold hover:bg-paper-foreground hover:text-paper transition-colors"
-            >
-              View all
-            </Link>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {sale.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/drop/${p.slug}`}
-                className="group relative block overflow-hidden border border-paper-foreground/10"
-              >
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  width={900}
-                  height={1100}
-                  className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-ink/85 p-3">
-                  <p className="display text-sm text-ink-foreground">{p.name}</p>
-                  <p className="label-xs text-primary">Save on this arc</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* LATEST DROPS */}
-      <section className="py-16">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
-          <p className="label-xs text-primary">{"New_Arrivals // Fresh_Ink"}</p>
-          <h2 className="display mt-2 text-4xl sm:text-6xl">Latest_Drops</h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {latest.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
         </div>
       </section>
 

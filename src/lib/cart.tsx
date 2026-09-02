@@ -14,6 +14,7 @@ export type CartLine = {
   name: string;
   size: string;
   price: number;
+  compareAt?: number;
   image: string;
   qty: number;
 };
@@ -22,6 +23,7 @@ type CartCtx = {
   lines: CartLine[];
   add: (line: CartLine) => void;
   remove: (slug: string, size: string) => void;
+  updateQty: (slug: string, size: string, delta: number) => void;
   count: number;
   total: number;
   open: boolean;
@@ -102,6 +104,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
       },
       remove: (slug, size) => {
         saveCart(lines.filter((l) => !(l.slug === slug && l.size === size)));
+      },
+      updateQty: (slug, size, delta) => {
+        const next = lines
+          .map((l) =>
+            l.slug === slug && l.size === size
+              ? { ...l, qty: Math.max(0, l.qty + delta) }
+              : l
+          )
+          .filter((l) => l.qty > 0);
+        saveCart(next);
       },
       count: lines.reduce((a, l) => a + l.qty, 0),
       total: lines.reduce((a, l) => a + l.qty * l.price, 0),

@@ -87,6 +87,7 @@
     color: var(--color-foreground);
     font-family: var(--font-mono);
     -webkit-font-smoothing: antialiased;
+    cursor: url('/cursor-katana-135.png') 10 0, auto;
   }
 
   h1,
