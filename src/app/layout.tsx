@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { Oswald, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import { Header } from "@/components/site/Header";
-import { Footer } from "@/components/site/Footer";
 import { CartDrawer } from "@/components/site/CartDrawer";
 import { FirstVisitPopup } from "@/components/site/FirstVisitPopup";
-import { CartProvider } from "@/lib/cart";
-import { WishlistProvider } from "@/lib/wishlist";
+import { Footer } from "@/components/site/Footer";
+import { Header } from "@/components/site/Header";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/lib/cart";
+import { cn } from "@/lib/utils";
+import { WishlistProvider } from "@/lib/wishlist";
+import type { Metadata } from "next";
+import { JetBrains_Mono, Oswald } from "next/font/google";
+import "./globals.css";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -55,7 +55,7 @@ export default function RootLayout({
       className={cn(
         "h-full antialiased dark",
         oswald.variable,
-        jetbrainsMono.variable
+        jetbrainsMono.variable,
       )}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-mono">
