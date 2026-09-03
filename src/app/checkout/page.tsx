@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { money } from "@/lib/products";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 const SHIPPING_COST = 9.99;
 const FREE_SHIPPING_THRESHOLD = 150;
@@ -28,7 +29,9 @@ export default function CheckoutPage() {
   const [postcode, setPostcode] = useState("");
   const [state, setState] = useState("VIC");
   const [phone, setPhone] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "afterpay" | "klarna" | "zip" | "paypal">("card");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "card" | "afterpay" | "klarna" | "zip" | "paypal"
+  >("card");
   const [billingSame, setBillingSame] = useState(true);
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -39,14 +42,21 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#f9f9f9", color: "#111" }}>
+    <div
+      className="min-h-screen"
+      style={{ background: "#f9f9f9", color: "#111" }}
+    >
       {/* Top bar */}
       <div
         className="label-xs flex items-center justify-between px-4 py-3 text-xs"
         style={{ background: "#c0392b", color: "#fff" }}
       >
-        <span className="tracking-widest">COLLECTION LIVE · FREE SHIPPING AUSTRALIA-WIDE ON ORDERS OVER A$150</span>
-        <span className="tracking-widest hidden md:block">· THE_ORIGIN_DROP COLLECTION LIVE ·</span>
+        <span className="tracking-widest">
+          COLLECTION LIVE · FREE SHIPPING AUSTRALIA-WIDE ON ORDERS OVER A$150
+        </span>
+        <span className="tracking-widest hidden md:block">
+          · THE_ORIGIN_DROP COLLECTION LIVE ·
+        </span>
       </div>
 
       {/* Header */}
@@ -55,7 +65,7 @@ export default function CheckoutPage() {
         style={{ borderColor: "#e0e0e0", background: "#fff" }}
       >
         <Link href="/">
-          <img src="/ZENJI-logo.png" alt="ZENJI" className="h-8" />
+          <Image src="/ZENJI-logo.png" alt="ZENJI" className="h-8" />
         </Link>
         <div className="hidden md:flex gap-8">
           {["DROP", "COLLECTION", "LOOKBOOK", "OUR STORY"].map((item) => (
@@ -102,8 +112,21 @@ export default function CheckoutPage() {
                   className="flex h-11 items-center justify-center rounded-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
                   style={{ background: "#111" }}
                 >
-                  <svg className="h-5" viewBox="0 0 50 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <text x="0" y="15" fill="white" fontSize="12" fontFamily="sans-serif">G Pay</text>
+                  <svg
+                    className="h-5"
+                    viewBox="0 0 50 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <text
+                      x="0"
+                      y="15"
+                      fill="white"
+                      fontSize="12"
+                      fontFamily="sans-serif"
+                    >
+                      G Pay
+                    </text>
                   </svg>
                 </button>
                 <button
@@ -120,13 +143,21 @@ export default function CheckoutPage() {
                   className="flex h-11 items-center justify-center rounded-sm font-bold text-white transition-opacity hover:opacity-90 cursor-pointer"
                   style={{ background: "#5433eb" }}
                 >
-                  <span className="text-xs font-bold tracking-wide">Shop Pay</span>
+                  <span className="text-xs font-bold tracking-wide">
+                    Shop Pay
+                  </span>
                 </button>
               </div>
               <div className="flex items-center gap-3">
-                <div className="h-px flex-1" style={{ background: "#e0e0e0" }} />
+                <div
+                  className="h-px flex-1"
+                  style={{ background: "#e0e0e0" }}
+                />
                 <span className="label-xs text-xs text-gray-400">OR</span>
-                <div className="h-px flex-1" style={{ background: "#e0e0e0" }} />
+                <div
+                  className="h-px flex-1"
+                  style={{ background: "#e0e0e0" }}
+                />
               </div>
             </div>
 
@@ -135,7 +166,10 @@ export default function CheckoutPage() {
               className="rounded-sm border p-5 space-y-4"
               style={{ borderColor: "#e0e0e0", background: "#fff" }}
             >
-              <h2 className="display flex items-center gap-2 text-sm tracking-widest" style={{ fontFamily: "var(--font-display)" }}>
+              <h2
+                className="display flex items-center gap-2 text-sm tracking-widest"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 <span
                   className="flex h-6 w-6 items-center justify-center text-xs font-bold text-white"
                   style={{ background: "#c0392b" }}
@@ -146,7 +180,10 @@ export default function CheckoutPage() {
               </h2>
 
               <div>
-                <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="email">
+                <label
+                  className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                  htmlFor="email"
+                >
                   EMAIL
                 </label>
                 <input
@@ -167,12 +204,16 @@ export default function CheckoutPage() {
                   onChange={(e) => setSubscribe(e.target.checked)}
                   className="accent-red-600"
                 />
-                Subscribe to ZENJI drops. Limited runs, no restocks — you hear first.
+                Subscribe to ZENJI drops. Limited runs, no restocks — you hear
+                first.
               </label>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="first-name">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="first-name"
+                  >
                     FIRST NAME
                   </label>
                   <input
@@ -185,7 +226,10 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="last-name">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="last-name"
+                  >
                     LAST NAME
                   </label>
                   <input
@@ -200,7 +244,10 @@ export default function CheckoutPage() {
               </div>
 
               <div>
-                <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="address">
+                <label
+                  className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                  htmlFor="address"
+                >
                   ADDRESS (LINE 1)
                 </label>
                 <input
@@ -215,7 +262,10 @@ export default function CheckoutPage() {
               </div>
 
               <div>
-                <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="address2">
+                <label
+                  className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                  htmlFor="address2"
+                >
                   ADDRESS LINE 2 (OPTIONAL)
                 </label>
                 <input
@@ -231,7 +281,10 @@ export default function CheckoutPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="city">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="city"
+                  >
                     CITY / SUBURB
                   </label>
                   <input
@@ -244,7 +297,10 @@ export default function CheckoutPage() {
                   />
                 </div>
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="postcode">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="postcode"
+                  >
                     POSTCODE
                   </label>
                   <input
@@ -261,7 +317,10 @@ export default function CheckoutPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="state">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="state"
+                  >
                     STATE
                   </label>
                   <select
@@ -272,12 +331,17 @@ export default function CheckoutPage() {
                     style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
                   >
                     {AUS_STATES.map((s) => (
-                      <option key={s} value={s}>{s}</option>
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="country">
+                  <label
+                    className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                    htmlFor="country"
+                  >
                     COUNTRY
                   </label>
                   <input
@@ -286,13 +350,20 @@ export default function CheckoutPage() {
                     value="AUSTRALIA"
                     readOnly
                     className="w-full border px-3 py-2.5 text-sm outline-none"
-                    style={{ borderColor: "#d0d0d0", background: "#f0f0f0", color: "#999" }}
+                    style={{
+                      borderColor: "#d0d0d0",
+                      background: "#f0f0f0",
+                      color: "#999",
+                    }}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="phone">
+                <label
+                  className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                  htmlFor="phone"
+                >
                   PHONE (OPTIONAL)
                 </label>
                 <input
@@ -312,7 +383,10 @@ export default function CheckoutPage() {
               className="rounded-sm border p-5 space-y-3"
               style={{ borderColor: "#e0e0e0", background: "#fff" }}
             >
-              <h2 className="display flex items-center gap-2 text-sm tracking-widest" style={{ fontFamily: "var(--font-display)" }}>
+              <h2
+                className="display flex items-center gap-2 text-sm tracking-widest"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 <span
                   className="flex h-6 w-6 items-center justify-center text-xs font-bold text-white"
                   style={{ background: "#c0392b" }}
@@ -327,7 +401,12 @@ export default function CheckoutPage() {
                 style={{ borderColor: "#c0392b", background: "#fff8f8" }}
               >
                 <div className="flex items-center gap-3">
-                  <input type="radio" name="shipping" defaultChecked className="accent-red-600" />
+                  <input
+                    type="radio"
+                    name="shipping"
+                    defaultChecked
+                    className="accent-red-600"
+                  />
                   <div>
                     <p className="text-sm font-medium">STANDARD SHIPPING</p>
                     <p className="label-xs text-xs text-gray-500 tracking-widest">
@@ -350,7 +429,10 @@ export default function CheckoutPage() {
               className="rounded-sm border p-5 space-y-4"
               style={{ borderColor: "#e0e0e0", background: "#fff" }}
             >
-              <h2 className="display flex items-center gap-2 text-sm tracking-widest" style={{ fontFamily: "var(--font-display)" }}>
+              <h2
+                className="display flex items-center gap-2 text-sm tracking-widest"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 <span
                   className="flex h-6 w-6 items-center justify-center text-xs font-bold text-white"
                   style={{ background: "#c0392b" }}
@@ -376,7 +458,9 @@ export default function CheckoutPage() {
                   />
                   <div className="flex-1 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Credit / Debit Card</span>
+                      <span className="text-sm font-medium">
+                        Credit / Debit Card
+                      </span>
                       <div className="flex items-center gap-1">
                         {["VISA", "MC", "AMEX"].map((c) => (
                           <span
@@ -392,7 +476,10 @@ export default function CheckoutPage() {
                     {paymentMethod === "card" && (
                       <div className="space-y-3">
                         <div>
-                          <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="card-number">
+                          <label
+                            className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                            htmlFor="card-number"
+                          >
                             CARD NUMBER
                           </label>
                           <input
@@ -402,12 +489,18 @@ export default function CheckoutPage() {
                             onChange={(e) => setCardNumber(e.target.value)}
                             placeholder="1234 5678 9012 3456"
                             className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                            style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                            style={{
+                              borderColor: "#d0d0d0",
+                              background: "#fafafa",
+                            }}
                           />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           <div>
-                            <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="expiry">
+                            <label
+                              className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                              htmlFor="expiry"
+                            >
                               EXPIRATION DATE
                             </label>
                             <input
@@ -417,11 +510,17 @@ export default function CheckoutPage() {
                               onChange={(e) => setExpiry(e.target.value)}
                               placeholder="MM / YY"
                               className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                              style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                              style={{
+                                borderColor: "#d0d0d0",
+                                background: "#fafafa",
+                              }}
                             />
                           </div>
                           <div>
-                            <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="cvc">
+                            <label
+                              className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                              htmlFor="cvc"
+                            >
                               SECURITY CODE
                             </label>
                             <input
@@ -431,27 +530,39 @@ export default function CheckoutPage() {
                               onChange={(e) => setCvc(e.target.value)}
                               placeholder="CVC"
                               className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                              style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                              style={{
+                                borderColor: "#d0d0d0",
+                                background: "#fafafa",
+                              }}
                             />
                           </div>
                         </div>
 
                         {/* Stripe Klarna inputs */}
                         <div>
-                          <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="card-country">
+                          <label
+                            className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                            htmlFor="card-country"
+                          >
                             COUNTRY
                           </label>
                           <select
                             id="card-country"
                             className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors cursor-pointer appearance-none"
-                            style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                            style={{
+                              borderColor: "#d0d0d0",
+                              background: "#fafafa",
+                            }}
                           >
                             <option>Australia</option>
                           </select>
                         </div>
 
                         <div>
-                          <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="stripe-email">
+                          <label
+                            className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                            htmlFor="stripe-email"
+                          >
                             EMAIL
                           </label>
                           <input
@@ -459,12 +570,18 @@ export default function CheckoutPage() {
                             type="email"
                             placeholder="you@sample.com"
                             className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                            style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                            style={{
+                              borderColor: "#d0d0d0",
+                              background: "#fafafa",
+                            }}
                           />
                         </div>
 
                         <div>
-                          <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="stripe-phone">
+                          <label
+                            className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                            htmlFor="stripe-phone"
+                          >
                             MOBILE NUMBER
                           </label>
                           <input
@@ -472,12 +589,18 @@ export default function CheckoutPage() {
                             type="tel"
                             placeholder="+61 0412 345 678"
                             className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                            style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                            style={{
+                              borderColor: "#d0d0d0",
+                              background: "#fafafa",
+                            }}
                           />
                         </div>
 
                         <div>
-                          <label className="label-xs mb-1 block text-xs tracking-widest text-gray-500" htmlFor="stripe-name">
+                          <label
+                            className="label-xs mb-1 block text-xs tracking-widest text-gray-500"
+                            htmlFor="stripe-name"
+                          >
                             FULL NAME
                           </label>
                           <input
@@ -485,15 +608,29 @@ export default function CheckoutPage() {
                             type="text"
                             placeholder="First and last name"
                             className="w-full border px-3 py-2.5 text-sm outline-none focus:border-black transition-colors"
-                            style={{ borderColor: "#d0d0d0", background: "#fafafa" }}
+                            style={{
+                              borderColor: "#d0d0d0",
+                              background: "#fafafa",
+                            }}
                           />
                         </div>
 
                         <p className="text-xs text-gray-400">
                           By providing your payment details, you agree to our{" "}
-                          <a href="/terms" className="underline hover:text-black">Terms</a>{" "}
+                          <a
+                            href="/terms"
+                            className="underline hover:text-black"
+                          >
+                            Terms
+                          </a>{" "}
                           and{" "}
-                          <a href="/privacy" className="underline hover:text-black">Privacy Policy</a>.
+                          <a
+                            href="/privacy"
+                            className="underline hover:text-black"
+                          >
+                            Privacy Policy
+                          </a>
+                          .
                         </p>
                       </div>
                     )}
@@ -542,7 +679,9 @@ export default function CheckoutPage() {
                     onChange={() => setPaymentMethod("zip")}
                     className="accent-red-600"
                   />
-                  <span className="text-sm font-medium">Zip — Flexible payments</span>
+                  <span className="text-sm font-medium">
+                    Zip — Flexible payments
+                  </span>
                 </label>
 
                 {/* PayPal */}
@@ -562,7 +701,8 @@ export default function CheckoutPage() {
               </div>
 
               <p className="label-xs text-xs text-gray-400 tracking-widest">
-                Powered by Stripe · Card details never touch our servers. · PCI DSS · AUTHORISED · SAFE
+                Powered by Stripe · Card details never touch our servers. · PCI
+                DSS · AUTHORISED · SAFE
               </p>
             </div>
 
@@ -571,7 +711,10 @@ export default function CheckoutPage() {
               className="rounded-sm border p-5 space-y-3"
               style={{ borderColor: "#e0e0e0", background: "#fff" }}
             >
-              <h2 className="display flex items-center gap-2 text-sm tracking-widest" style={{ fontFamily: "var(--font-display)" }}>
+              <h2
+                className="display flex items-center gap-2 text-sm tracking-widest"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
                 <span
                   className="flex h-6 w-6 items-center justify-center text-xs font-bold text-white"
                   style={{ background: "#c0392b" }}
@@ -597,16 +740,24 @@ export default function CheckoutPage() {
               id="place-order-btn"
               type="button"
               className="display w-full py-4 text-base font-bold tracking-widest text-white transition-opacity hover:opacity-90 cursor-pointer"
-              style={{ background: "#c0392b", fontFamily: "var(--font-display)" }}
+              style={{
+                background: "#c0392b",
+                fontFamily: "var(--font-display)",
+              }}
             >
               ▶ PLACE ORDER — {money(grandTotal)}
             </button>
 
             <p className="text-center text-xs text-gray-400">
               By placing this order you accept our{" "}
-              <a href="/terms" className="underline hover:text-black">Terms</a>{" "}
+              <a href="/terms" className="underline hover:text-black">
+                Terms
+              </a>{" "}
               and{" "}
-              <a href="/privacy" className="underline hover:text-black">Privacy Policy</a>.
+              <a href="/privacy" className="underline hover:text-black">
+                Privacy Policy
+              </a>
+              .
             </p>
           </div>
 
@@ -626,15 +777,21 @@ export default function CheckoutPage() {
               {/* Line items */}
               <ul className="divide-y" style={{ borderColor: "#f0f0f0" }}>
                 {lines.length === 0 ? (
-                  <li className="py-3 text-xs text-gray-400">Your cart is empty.</li>
+                  <li className="py-3 text-xs text-gray-400">
+                    Your cart is empty.
+                  </li>
                 ) : (
                   lines.map((l) => (
                     <li key={`${l.slug}-${l.size}`} className="flex gap-3 py-3">
                       <div
                         className="relative shrink-0 overflow-hidden rounded-sm border"
-                        style={{ width: 56, height: 56, borderColor: "#e0e0e0" }}
+                        style={{
+                          width: 56,
+                          height: 56,
+                          borderColor: "#e0e0e0",
+                        }}
                       >
-                        <img
+                        <Image
                           src={l.image}
                           alt={l.name}
                           className="h-full w-full object-cover"
@@ -648,7 +805,9 @@ export default function CheckoutPage() {
                         </span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-bold uppercase truncate">{l.name}</p>
+                        <p className="text-xs font-bold uppercase truncate">
+                          {l.name}
+                        </p>
                         <p className="label-xs text-[10px] text-gray-400 tracking-widest">
                           Size {l.size}
                         </p>
@@ -659,7 +818,9 @@ export default function CheckoutPage() {
                             {money(l.compareAt * l.qty)}
                           </p>
                         )}
-                        <p className="text-xs font-bold">{money(l.price * l.qty)}</p>
+                        <p className="text-xs font-bold">
+                          {money(l.price * l.qty)}
+                        </p>
                       </div>
                     </li>
                   ))
@@ -689,7 +850,10 @@ export default function CheckoutPage() {
               </div>
 
               {/* Totals */}
-              <div className="space-y-2 border-t pt-4" style={{ borderColor: "#e0e0e0" }}>
+              <div
+                className="space-y-2 border-t pt-4"
+                style={{ borderColor: "#e0e0e0" }}
+              >
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Subtotal</span>
                   <span className="font-medium">{money(total)}</span>
@@ -714,7 +878,10 @@ export default function CheckoutPage() {
                 </span>
                 <span
                   className="display text-xl font-bold"
-                  style={{ color: "#c0392b", fontFamily: "var(--font-display)" }}
+                  style={{
+                    color: "#c0392b",
+                    fontFamily: "var(--font-display)",
+                  }}
                 >
                   {money(grandTotal)}
                 </span>

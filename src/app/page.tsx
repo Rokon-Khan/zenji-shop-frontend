@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { products } from "@/lib/products";
-import { ProductCard } from "@/components/site/ProductCard";
 import HomeScrollStack from "@/components/HomeScrollStack";
+import { ProductCard } from "@/components/site/ProductCard";
+import { products } from "@/lib/products";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "ZENJI — Wear Your Story | Anime Streetwear Australia",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "Limited-edition anime graphic tees from ZENJI. 240gsm heavyweight cotton, oversized fit, free AU shipping over A$150.",
   openGraph: {
     title: "ZENJI — Wear Your Story",
-    description: "Anime-inspired streetwear for gamers and otaku. Every drop limited.",
+    description:
+      "Anime-inspired streetwear for gamers and otaku. Every drop limited.",
     images: ["/hero.jpg"],
   },
 };
@@ -69,7 +71,7 @@ export default function HomePage() {
 
       {/* ETHOS SPLIT */}
       <section className="grid md:grid-cols-2">
-        <img
+        <Image
           src="/lookbook-3.jpg"
           alt="Group of friends wearing ZENJI tees in a warehouse"
           loading="lazy"
@@ -84,13 +86,13 @@ export default function HomePage() {
             warrior spirit.
           </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            ZENJI is an Australian anime streetwear label. Inspired by samurai discipline, anime art
-            and modern street culture, we make premium streetwear for those who choose their own
-            path.
+            ZENJI is an Australian anime streetwear label. Inspired by samurai
+            discipline, anime art and modern street culture, we make premium
+            streetwear for those who choose their own path.
           </p>
           <blockquote className="rule-left text-sm leading-relaxed text-primary">
-            ZENJI is more than a name on a shirt. It represents the warrior within, the part of us
-            that keeps moving forward.
+            ZENJI is more than a name on a shirt. It represents the warrior
+            within, the part of us that keeps moving forward.
           </blockquote>
           <Link
             href="/our-story"
@@ -103,7 +105,7 @@ export default function HomePage() {
 
       {/* ETHOS BANNER */}
       <section className="relative">
-        <img
+        <Image
           src="/lookbook-1.jpg"
           alt="Models in ZENJI tees on a neon Tokyo street"
           loading="lazy"
@@ -121,8 +123,8 @@ export default function HomePage() {
             Ethos
           </h2>
           <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Limited runs. No restocks. Every piece is a chapter — once the arc closes, it stays
-            closed.
+            Limited runs. No restocks. Every piece is a chapter — once the arc
+            closes, it stays closed.
           </p>
         </div>
       </section>

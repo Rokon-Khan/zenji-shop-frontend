@@ -18,14 +18,7 @@ type WishlistCtx = {
 };
 
 const Ctx = createContext<WishlistCtx | null>(null);
-const KEY = "zenji_wishlist_v1";
-
-// Default initial items if no previous wishlist exists in localStorage
-const DEFAULT_INITIAL_WISHLIST: string[] = [
-  "paradise-spirit-tee",
-  "warrior-spirit-tee",
-  "bushido-tee",
-];
+const KEY = "zenji_wishlist_v2";
 
 let listeners: Array<() => void> = [];
 
@@ -43,30 +36,27 @@ function subscribe(listener: () => void) {
 }
 
 let cachedRaw: string | null = null;
-let cachedItems: string[] = DEFAULT_INITIAL_WISHLIST;
+let cachedItems: string[] = [];
 
 function getWishlistSnapshot(): string[] {
-  if (typeof window === "undefined") return DEFAULT_INITIAL_WISHLIST;
+  if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw === null) {
-      // First time initialization
-      localStorage.setItem(KEY, JSON.stringify(DEFAULT_INITIAL_WISHLIST));
-      cachedRaw = JSON.stringify(DEFAULT_INITIAL_WISHLIST);
-      cachedItems = DEFAULT_INITIAL_WISHLIST;
-      return cachedItems;
+    // Clear old legacy key with hardcoded demo items
+    if (localStorage.getItem("zenji_wishlist_v1")) {
+      localStorage.removeItem("zenji_wishlist_v1");
     }
+    const raw = localStorage.getItem(KEY);
     if (raw !== cachedRaw) {
       cachedRaw = raw;
-      cachedItems = JSON.parse(raw);
+      cachedItems = raw ? JSON.parse(raw) : [];
     }
     return cachedItems;
   } catch {
-    return DEFAULT_INITIAL_WISHLIST;
+    return [];
   }
 }
 
-const SERVER_SNAPSHOT: string[] = DEFAULT_INITIAL_WISHLIST;
+const SERVER_SNAPSHOT: string[] = [];
 
 function getServerSnapshot(): string[] {
   return SERVER_SNAPSHOT;

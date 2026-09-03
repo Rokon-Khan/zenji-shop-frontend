@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ChevronDown, Heart, Menu, ShoppingCart, User, X } from "lucide-react";
-import { Marquee } from "./Marquee";
 import { useCart } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
+import { ChevronDown, Heart, Menu, ShoppingCart, User, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { Marquee } from "./Marquee";
 
 const NAV = [
   { label: "DROP", to: "/drop" },
@@ -34,7 +35,7 @@ export function Header() {
       <div className="border-b border-border bg-ink">
         <div className="mx-auto grid h-16 max-w-[1600px] grid-cols-[auto_1fr_auto] items-center gap-4 px-4 sm:px-6">
           <Link href="/" className="flex min-w-0 items-center">
-            <img
+            <Image
               src="/ZENJI-logo.png"
               alt="ZENJI"
               className="h-6 w-auto shrink-0 invert sm:h-7"
@@ -52,9 +53,7 @@ export function Header() {
                   key={n.to}
                   href={n.to}
                   className={`nav-link-glow label-xs font-bold transition-colors ${
-                    active
-                      ? "text-primary"
-                      : "text-foreground hover:text-white"
+                    active ? "text-primary" : "text-foreground hover:text-white"
                   }`}
                 >
                   {n.label}
@@ -143,7 +142,11 @@ export function Header() {
               aria-label="Toggle menu"
               className="lg:hidden cursor-pointer p-1.5"
             >
-              {mobile ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobile ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>

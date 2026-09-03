@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -7,7 +8,8 @@ export const metadata: Metadata = {
     "ZENJI is an independent Australian anime streetwear label. Original artwork, heavyweight cotton, limited drops, no restocks.",
   openGraph: {
     title: "Our Story — ZENJI",
-    description: "An independent Australian anime streetwear label. Wear the Arc.",
+    description:
+      "An independent Australian anime streetwear label. Wear the Arc.",
   },
 };
 
@@ -33,40 +35,48 @@ export default function OurStoryPage() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-border">
-        <img
+        <Image
           src="/hero.jpg"
           alt="ZENJI studio"
           className="h-[46vh] min-h-72 w-full object-cover opacity-40"
         />
         <div className="absolute inset-0 flex items-end">
           <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6">
-            <p className="label-xs text-primary">{"EST_2024 // Melbourne, AU"}</p>
-            <h1 className="display mt-3 text-4xl leading-[0.88] sm:text-6xl">Our_Story</h1>
+            <p className="label-xs text-primary">
+              {"EST_2024 // Melbourne, AU"}
+            </p>
+            <h1 className="display mt-3 text-4xl leading-[0.88] sm:text-6xl">
+              Our_Story
+            </h1>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-[1600px] grid gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
         <div>
-          <h2 className="display text-3xl sm:text-4xl">Built From an Obsession</h2>
+          <h2 className="display text-3xl sm:text-4xl">
+            Built From an Obsession
+          </h2>
           <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
             <p>
-              ZENJI started in a bedroom with a drawing tablet and a stack of manga volumes that had
-              been read until the spines gave out. We wanted the feeling of a great arc — the
-              tension, the turn, the quiet after — on something you could actually wear.
+              ZENJI started in a bedroom with a drawing tablet and a stack of
+              manga volumes that had been read until the spines gave out. We
+              wanted the feeling of a great arc — the tension, the turn, the
+              quiet after — on something you could actually wear.
             </p>
             <p>
-              What existed was licensed merch: thin blanks, flat prints, characters slapped on
-              cotton. So we drew our own. Each ZENJI piece is an original interpretation of a moment
-              — a breath technique, a domain, a will that refuses to go out.
+              What existed was licensed merch: thin blanks, flat prints,
+              characters slapped on cotton. So we drew our own. Each ZENJI piece
+              is an original interpretation of a moment — a breath technique, a
+              domain, a will that refuses to go out.
             </p>
             <p>
-              We print small on purpose. A drop is an arc: it opens, it runs, it closes. No
-              restocks, no shortcuts, no compromise on the blank.
+              We print small on purpose. A drop is an arc: it opens, it runs, it
+              closes. No restocks, no shortcuts, no compromise on the blank.
             </p>
           </div>
         </div>
-        <img
+        <Image
           src="/lookbook-2.jpg"
           alt="ZENJI tee worn on the street"
           loading="lazy"
@@ -88,7 +98,9 @@ export default function OurStoryPage() {
 
       <section className="px-4 py-16 text-center sm:px-6">
         <h2 className="display text-3xl sm:text-5xl">Wear the Arc</h2>
-        <p className="label-xs mt-3 text-primary">{"Ten pieces // One drop // No restocks"}</p>
+        <p className="label-xs mt-3 text-primary">
+          {"Ten pieces // One drop // No restocks"}
+        </p>
         <Link
           href="/drop"
           className="label-xs mt-6 inline-block bg-primary px-8 py-4 font-bold text-primary-foreground hover:opacity-90 transition-opacity"

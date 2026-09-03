@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { Heart } from "lucide-react";
-import { toast } from "sonner";
-import { money, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
+import { money, type Product } from "@/lib/products";
 import { useWishlist } from "@/lib/wishlist";
+import { Heart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { toast } from "sonner";
 
 export function ProductCard({ product }: { product: Product }) {
   const { add, setOpen } = useCart();
@@ -24,7 +25,7 @@ export function ProductCard({ product }: { product: Product }) {
             Sale
           </span>
         )}
-        <img
+        <Image
           src={product.image}
           alt={`${product.name} — ${product.colorway}`}
           loading="lazy"
@@ -80,9 +81,8 @@ export function ProductCard({ product }: { product: Product }) {
           <button
             onClick={() => {
               const size =
-                product.sizes.find(
-                  (s) => !product.soldOutSizes.includes(s)
-                ) ?? "M";
+                product.sizes.find((s) => !product.soldOutSizes.includes(s)) ??
+                "M";
               add({
                 slug: product.slug,
                 name: product.name,

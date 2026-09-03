@@ -1,18 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Heart, Minus, Plus, Truck } from "lucide-react";
-import { toast } from "sonner";
+import { ProductCard } from "@/components/site/ProductCard";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { money, type Product } from "@/lib/products";
 import { useCart } from "@/lib/cart";
-import { ProductCard } from "@/components/site/ProductCard";
+import { money, type Product } from "@/lib/products";
+import { useWishlist } from "@/lib/wishlist";
+import { Heart, Minus, Plus, Truck } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export function ProductDetailClient({
   product,
@@ -22,6 +24,8 @@ export function ProductDetailClient({
   related: Product[];
 }) {
   const { add, setOpen } = useCart();
+  const { toggle, has } = useWishlist();
+  const isSaved = has(product.slug);
   const [size, setSize] = useState<string | null>(null);
   const [qty, setQty] = useState(1);
   const [active, setActive] = useState(0);
@@ -50,10 +54,17 @@ export function ProductDetailClient({
                   onClick={() => setActive(i)}
                   aria-label={`View image ${i + 1}`}
                   className={`w-20 shrink-0 border cursor-pointer transition-colors ${
-                    active === i ? "border-primary" : "border-border hover:border-primary/50"
+                    active === i
+                      ? "border-primary"
+                      : "border-border hover:border-primary/50"
                   }`}
                 >
-                  <img src={g} alt="" className="aspect-[4/5] w-full object-cover" loading="lazy" />
+                  <Image
+                    src={g}
+                    alt=""
+                    className="aspect-[4/5] w-full object-cover"
+                    loading="lazy"
+                  />
                 </button>
               ))}
             </div>
@@ -63,7 +74,7 @@ export function ProductDetailClient({
                   Sale
                 </span>
               )}
-              <img
+              <Image
                 src={product.gallery[active] ?? product.image}
                 alt={`${product.name} — ${product.colorway}`}
                 width={900}
@@ -77,7 +88,9 @@ export function ProductDetailClient({
             <p className="label-xs text-primary">
               {`${product.sku} // ${product.colorway}`}
             </p>
-            <h1 className="display mt-3 text-4xl leading-[0.9] sm:text-5xl">{product.name}</h1>
+            <h1 className="display mt-3 text-4xl leading-[0.9] sm:text-5xl">
+              {product.name}
+            </h1>
 
             <div className="mt-4 flex items-baseline gap-3">
               {onSale && (
@@ -85,12 +98,16 @@ export function ProductDetailClient({
                   {money(product.compareAt!)}
                 </span>
               )}
-              <span className={`display text-3xl ${onSale ? "text-primary" : ""}`}>
+              <span
+                className={`display text-3xl ${onSale ? "text-primary" : ""}`}
+              >
                 {money(product.price)}
               </span>
             </div>
 
-            <p className="mt-4 max-w-md text-sm text-muted-foreground">{product.details[0]}</p>
+            <p className="mt-4 max-w-md text-sm text-muted-foreground">
+              {product.details[0]}
+            </p>
 
             <div className="mt-8">
               <div className="label-xs flex items-center justify-between">
@@ -127,7 +144,9 @@ export function ProductDetailClient({
                 >
                   <Minus className="h-3 w-3" />
                 </button>
-                <span className="label-xs w-8 text-center font-bold">{qty}</span>
+                <span className="label-xs w-8 text-center font-bold">
+                  {qty}
+                </span>
                 <button
                   onClick={() => setQty((q) => q + 1)}
                   aria-label="Increase quantity"
@@ -157,21 +176,39 @@ export function ProductDetailClient({
                 Add to cart →
               </button>
               <button
-                onClick={() => toast.success(`${product.name} saved to wishlist`)}
+                onClick={() => {
+                  toggle(product.slug);
+                  if (isSaved) {
+                    toast.info(`${product.name} removed from wishlist`);
+                  } else {
+                    toast.success(`${product.name} saved to wishlist`);
+                  }
+                }}
                 aria-label="Add to wishlist"
-                className="border border-border p-4 hover:border-primary hover:text-primary transition-colors cursor-pointer"
+                className={`border p-4 transition-colors cursor-pointer ${
+                  isSaved
+                    ? "border-primary text-primary"
+                    : "border-border hover:border-primary hover:text-primary"
+                }`}
               >
-                <Heart className="h-4 w-4" />
+                <Heart className={`h-4 w-4 ${isSaved ? "fill-primary" : ""}`} />
               </button>
             </div>
 
             <p className="label-xs mt-4 flex items-center gap-2 text-muted-foreground">
-              <Truck className="h-4 w-4" /> Free Australia-wide shipping over A$100
+              <Truck className="h-4 w-4" /> Free Australia-wide shipping over
+              A$100
             </p>
 
-            <Accordion type="single" collapsible className="mt-8 border-t border-border">
+            <Accordion
+              type="single"
+              collapsible
+              className="mt-8 border-t border-border"
+            >
               <AccordionItem value="details" className="border-border">
-                <AccordionTrigger className="label-xs font-bold">Product_Details</AccordionTrigger>
+                <AccordionTrigger className="label-xs font-bold">
+                  Product_Details
+                </AccordionTrigger>
                 <AccordionContent>
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     {product.details.map((d) => (
@@ -181,9 +218,12 @@ export function ProductDetailClient({
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="sizing" className="border-border">
-                <AccordionTrigger className="label-xs font-bold">Sizing_&_Fit</AccordionTrigger>
+                <AccordionTrigger className="label-xs font-bold">
+                  Sizing_&_Fit
+                </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  Oversized boxy fit. Model is 183cm wearing size L. Size down for a regular fit.
+                  Oversized boxy fit. Model is 183cm wearing size L. Size down
+                  for a regular fit.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="shipping" className="border-border">
@@ -191,8 +231,9 @@ export function ProductDetailClient({
                   Shipping_&_Returns
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  Dispatched within 2 business days from Melbourne. 30-day returns on unworn pieces
-                  with tags attached. Drops are limited — no restocks once sold out.
+                  Dispatched within 2 business days from Melbourne. 30-day
+                  returns on unworn pieces with tags attached. Drops are limited
+                  — no restocks once sold out.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
