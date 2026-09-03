@@ -78,16 +78,48 @@
 }
 
 @layer base {
-  * {
+  *,
+  *::before,
+  *::after {
     border-color: var(--color-border);
+    cursor: url('/cursor-katana-135.png') 10 0, auto;
   }
 
+  html,
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-mono);
     -webkit-font-smoothing: antialiased;
     cursor: url('/cursor-katana-135.png') 10 0, auto;
+  }
+
+  a,
+  a *,
+  button,
+  button *,
+  [role="button"],
+  [role="button"] *,
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  label,
+  summary,
+  select,
+  .cursor-pointer,
+  [class*="cursor-pointer"] {
+    cursor: url('/cursor-katana-135.png') 10 0, pointer !important;
+  }
+
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+  textarea {
+    cursor: text;
+  }
+
+  :disabled,
+  [aria-disabled="true"],
+  .cursor-not-allowed {
+    cursor: not-allowed !important;
   }
 
   h1,

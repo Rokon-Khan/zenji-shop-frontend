@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const FOUR_COLUMNS = [
@@ -20,9 +21,21 @@ const FOUR_COLUMNS = [
   {
     title: "COMMUNITY",
     links: [
-      { label: "TikTok", to: "https://www.tiktok.com/@zenji_.shop", external: true },
-      { label: "Instagram", to: "https://www.instagram.com/zenji_.shop", external: true },
-      { label: "Facebook", to: "https://www.facebook.com/people/ZENJI/61592433253702/", external: true },
+      {
+        label: "TikTok",
+        to: "https://www.tiktok.com/@zenji_.shop",
+        external: true,
+      },
+      {
+        label: "Instagram",
+        to: "https://www.instagram.com/zenji_.shop",
+        external: true,
+      },
+      {
+        label: "Facebook",
+        to: "https://www.facebook.com/people/ZENJI/61592433253702/",
+        external: true,
+      },
     ],
   },
   {
@@ -92,12 +105,25 @@ export function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-border bg-ink">
       <div className="relative mx-auto max-w-[1600px] px-4 py-14 sm:px-6 md:py-20 z-10">
+        {/* Desktop Centered Background ZENJI Watermark */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 hidden lg:flex items-center justify-center select-none overflow-hidden"
+        >
+          <span
+            className="display text-[24vw] 2xl:text-[240px] font-black uppercase tracking-tight text-white/[0.05] leading-none"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            ZENJI
+          </span>
+        </div>
+
         {/* Main Grid: Left info / socials, Right 4 navigation columns */}
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_2fr]">
+        <div className="relative z-10 grid gap-12 lg:grid-cols-[1.2fr_2fr]">
           {/* Left brand area */}
           <div className="space-y-6">
             <Link href="/" className="inline-block">
-              <img
+              <Image
                 src="/ZENJI-logo-mono.png"
                 alt="ZENJI mark"
                 width={64}
@@ -107,8 +133,8 @@ export function Footer() {
               />
             </Link>
             <p className="max-w-sm text-xs leading-relaxed text-muted-foreground font-mono">
-              Wear the Arc. Anime-inspired streetwear for gamers and otaku. Every drop limited. No
-              restocks. Ever.
+              Wear the Arc. Anime-inspired streetwear for gamers and otaku.
+              Every drop limited. No restocks. Ever.
             </p>
 
             <div className="pt-2">
@@ -146,13 +172,13 @@ export function Footer() {
 
           {/* Right Navigation 4 Columns with Central Watermark */}
           <div className="relative">
-            {/* Responsive Centered Background ZENJI Watermark */}
+            {/* Mobile Centered Background ZENJI Watermark */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 flex items-center justify-center select-none overflow-hidden"
+              className="pointer-events-none absolute inset-0 flex lg:hidden items-center justify-center select-none overflow-hidden"
             >
               <span
-                className="display text-[26vw] sm:text-[22vw] lg:text-[14vw] font-black uppercase tracking-tight text-white/[0.07] sm:text-white/[0.05]"
+                className="display text-[26vw] sm:text-[22vw] font-black uppercase tracking-tight text-white/[0.07] sm:text-white/[0.05]"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 ZENJI
@@ -222,7 +248,8 @@ export function Footer() {
               Cookies
             </Link>
             <span className="label-xs text-[11px] text-muted-foreground hidden sm:inline">
-              <span className="text-primary">●</span> Anime-inspired. Gamer-built. Community-owned.
+              <span className="text-primary">●</span> Anime-inspired.
+              Gamer-built. Community-owned.
             </span>
           </div>
         </div>
