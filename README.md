@@ -253,7 +253,7 @@ This project is proprietary. All rights reserved © 2026 ZENJI.
 
 <div align="center">
 
-**Built with 🗡️ by the ZENJI team.**
+**Built with 🗡️ by the Md Rokonuzzaman.**
 
 *Anime-inspired. Gamer-built. Community-owned.*
 
